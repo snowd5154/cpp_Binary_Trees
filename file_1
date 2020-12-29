@@ -1,0 +1,179 @@
+#include <iostream>
+#include <cstdlib>
+
+using namespace std;
+
+// node
+struct node{
+int data;
+struct node *left, *right;
+};
+typedef struct node *ABB;
+
+ABB createnode(int x)
+{
+ABB newnode = new(struct node);
+newnode->data = x;
+newnode->left = NULL;
+newnode->right = NULL;
+
+return newnode;
+}
+// insert value in Tree
+void insert(ABB &tree, int x)
+{
+if(tree==NULL)
+{
+tree = createnode(x);
+}
+else if(x < tree->data)
+insert(tree->left, x);
+else if(x > tree->data)
+insert(tree->right, x);
+}
+// Display Tree in Pre Order
+void preOrder(ABB tree)
+{
+if(tree!=NULL)
+{
+cout << tree->data <<" ";
+preOrder(tree->left);
+preOrder(tree->right);
+}
+}
+// Display Tree In Order
+void inOrder(ABB tree)
+{
+if(tree!=NULL)
+{
+inOrder(tree->left);
+cout << tree->data << " ";
+inOrder(tree->right);
+}
+}
+// Display Tree in Post Order
+void postOrder(ABB tree)
+{
+if(tree!=NULL)
+{
+postOrder(tree->left);
+postOrder(tree->right);
+cout << tree->data << " ";
+}
+}
+// Display Tree
+void vertree(ABB tree, int n)
+{
+if(tree==NULL)
+return;
+vertree(tree->right, n+1);
+
+for(int i=0; i<n; i++)
+cout<<" ";
+
+cout<< tree->data <<endl;
+
+vertree(tree->left, n+1);
+}
+// Height in Tree
+int heightTree(ABB tree)
+{
+int a=0,b=0;
+  
+   if(tree==NULL)
+return 0;
+   else
+   {
+       a=heightTree(tree->left)+1;
+       b=heightTree(tree->right)+1;
+   }
+   if(a>=b)
+       return a;
+   else
+       return b;
+}
+// number Leaves in Tree
+int numLeaves(ABB tree)
+{
+   if(tree==NULL)
+       return 0;
+   if(tree->right==NULL && tree->left==NULL)
+       return 1;
+
+   return numLeaves(tree->right) + numLeaves(tree->left);
+}
+
+// function main
+int main()
+{
+// ANSWER a. Build a binary search tree, T1.
+ABB T1 = NULL; // create Tree 1
+ABB T2 = NULL; // create Tree 2
+ABB T3 = NULL; // create Tree 3
+
+cout << "\n\t\t ..[ Binary Search Tree ].. \n\n";
+  
+insert( T1, 34);
+cout << "\n\nT1: > 34 ";
+insert( T1, 64);
+cout << "> 64 ";
+insert( T1, 76);
+cout << "> 76 ";
+insert( T1, 5);
+cout << "> 5 ";
+insert( T1, 2);
+cout << "> 2 ";
+insert( T1, 39);
+cout << "> 39 ";
+  
+// ANSWER b. Do a postorder traversal of T1 and, while doing the postorder
+// traversal, insert the nodes into a second binary search tree T2.
+cout << "\n\nPost Order : "; postOrder(T1);
+  
+insert( T2, 34);
+cout << "\n\nT2: > 34 ";
+insert( T2, 64);
+cout << "> 64 ";
+insert( T2, 76);
+cout << "> 76 ";
+insert( T2, 5);
+cout << "> 5 ";
+insert( T2, 2);
+cout << "> 2 ";
+insert( T2, 39);
+cout << "> 39 ";
+  
+// ANSWER c. Do a preorder traversal of T2 and, while doing the preorder
+// traversal, insert the node into a third binary search tree T3.
+cout << "\n\nPre Order : "; preOrder(T2);
+  
+insert( T3, 34);
+cout << "\n\nT3: > 34 ";
+insert( T3, 64);
+cout << "> 64 ";
+insert( T3, 76);
+cout << "> 76 ";
+insert( T3, 5);
+cout << "> 5 ";
+insert( T3, 2);
+cout << "> 2 ";
+insert( T3, 39);
+cout << "> 39 ";
+  
+// ANSWER d. Do an inorder traversal of T3.
+cout << "\n\nIn order : "; inOrder(T3);
+
+//cout << "\n Display ABB \n\n";
+//vertree( T1, 0);
+  
+// ANSWER e. Output the heights and the number of leaves in each of the three
+// binary search trees.
+cout << "\n\nHeight of T1: " << heightTree(T1) << ", Number Leaves of T1: " << numLeaves(T1);
+cout << "\n\nHeight of T2: " << heightTree(T2) << ", Number Leaves of T2: " << numLeaves(T2);
+cout << "\n\nHeight of T3: " << heightTree(T3) << ", Number Leaves of T3: " << numLeaves(T3);
+
+cout << endl << endl;
+
+system("pause");
+return 0;
+}
